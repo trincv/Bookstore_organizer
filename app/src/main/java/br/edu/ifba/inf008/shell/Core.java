@@ -35,4 +35,6 @@ public class Core extends ICore
     private IAuthenticationController authenticationController = new AuthenticationController();
     private IIOController ioController = new IOController();
     private IPluginController pluginController = new PluginController();
+
+    System.out.print("1");
 }
