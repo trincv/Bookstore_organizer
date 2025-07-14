@@ -29,7 +29,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <!-- Change the output directory -->
-                    <outputDirectory>${project.basedir}/../</outputDirectory>
+                    <outputDirectory>${plugins/myplugin}/../</outputDirectory>
                     <!-- Change the JAR file name -->
                     <finalName>MyPlugin</finalName>
                 </configuration>
