@@ -21,6 +21,15 @@
     </dependencies>
 
     <build>
+
+        <directory>${project.basedir}/../jarPlugins</directory>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
         <plugins>
             <!-- Configure maven-jar-plugin -->
             <plugin>
@@ -28,10 +37,13 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <!-- Change the output directory -->
-                    <outputDirectory>${plugins/myplugin}/../</outputDirectory>
-                    <!-- Change the JAR file name -->
                     <finalName>MyPlugin</finalName>
+                    <archive>
+                        <manifest>
+                            <!-- Fully-qualified name of the main plugin class -->
+                            <mainClass>br.edu.ifba.inf008.plugins.MyPlugin</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>

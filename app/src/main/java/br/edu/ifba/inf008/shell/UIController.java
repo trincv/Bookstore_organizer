@@ -55,6 +55,9 @@ public class UIController extends Application implements IUIController
         primaryStage.show();
 
         Core.getInstance().getPluginController().init();
+
+        PluginController mainWindow = new PluginController();
+        if (mainWindow.init() == false) System.err.println("Initialize err plugin");
     }
 
     public MenuItem createMenuItem(String menuText, String menuItemText) {
