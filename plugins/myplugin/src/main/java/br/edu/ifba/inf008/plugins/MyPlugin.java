@@ -15,6 +15,8 @@ public class MyPlugin implements IPlugin
     public boolean init() {
         IUIController uiController = ICore.getInstance().getUIController();
 
+        System.out.println("PRINTOU");
+
         MenuItem menuItem = uiController.createMenuItem("Menu 1", "My Menu Item");
         menuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
