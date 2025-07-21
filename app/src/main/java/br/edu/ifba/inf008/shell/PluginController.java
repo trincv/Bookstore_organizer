@@ -43,6 +43,7 @@ public class PluginController implements IPluginController
             {
                 String pluginName = plugins[i].split("\\.")[0];
                 IPlugin plugin = (IPlugin) Class.forName("br.edu.ifba.inf008.plugins." + pluginName, true, ulc).newInstance();
+                System.out.println("Plugin loaded: " + pluginName);
                 plugin.init();
             }
 

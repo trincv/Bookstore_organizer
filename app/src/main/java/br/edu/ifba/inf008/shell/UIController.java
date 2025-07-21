@@ -3,12 +3,14 @@ package br.edu.ifba.inf008.shell;
 import br.edu.ifba.inf008.interfaces.IUIController;
 import br.edu.ifba.inf008.interfaces.ICore;
 import br.edu.ifba.inf008.shell.PluginController;
+import br.edu.ifba.inf008.interfaces.INavigationController;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.application.Platform;
@@ -21,7 +23,9 @@ public class UIController extends Application implements IUIController
 {
     private ICore core;
     private MenuBar menuBar;
-    private TabPane tabPane;
+    private TabPane tabPane; 
+    private Stage stage;
+    private BorderPane root;
     private static UIController uiController;
 
     public UIController() {
@@ -36,11 +40,18 @@ public class UIController extends Application implements IUIController
         return uiController;
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
+        this.stage = primaryStage;
+        primaryStage.setTitle("LIBRARY MANAGMENT SYSTEM");
 
-        menuBar = new MenuBar();
+        root = new BorderPane();
+
+        /*menuBar = new MenuBar();
 
         VBox vBox = new VBox(menuBar);
 
@@ -48,15 +59,19 @@ public class UIController extends Application implements IUIController
         tabPane.setSide(Side.BOTTOM);
 
         vBox.getChildren().addAll(tabPane);
+        */
 
-        Scene scene = new Scene(vBox, 960, 600);
+        Scene scene = new Scene(root);
 
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        System.out.println("PRINTOU");
-
         Core.getInstance().getPluginController().init();
+        Core.getInstance().initNavigationController(primaryStage);
+    }
+
+    public BorderPane getSceneRoot() {
+        return root;
     }
 
     public MenuItem createMenuItem(String menuText, String menuItemText) {

@@ -3,9 +3,11 @@ package br.edu.ifba.inf008.shell;
 import br.edu.ifba.inf008.interfaces.*;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.stage.Stage;
 
 public class Core extends ICore
 {
+
     private Core() {}
 
     public static boolean init() {
@@ -15,24 +17,41 @@ public class Core extends ICore
 	}
 
 	instance = new Core();
-        UIController.launch(UIController.class);
+        
+    UIController.launch(UIController.class);
 
         return true;
     }
+
     public IUIController getUIController() {
         return UIController.getInstance();
     }
+
     public IAuthenticationController getAuthenticationController() {
         return authenticationController;
     }
+
     public IIOController getIOController() {
         return ioController;
     }
+
     public IPluginController getPluginController() {
         return pluginController;
     }
 
+    public INavigationController getNavigationController() {
+        return navigationController;
+    }
+
     private IAuthenticationController authenticationController = new AuthenticationController();
+
     private IIOController ioController = new IOController();
+
     private IPluginController pluginController = new PluginController();
+
+    private INavigationController navigationController;
+
+    public void initNavigationController(Stage stage) {
+        this.navigationController = new NavigationController(stage);
+    }
 }
