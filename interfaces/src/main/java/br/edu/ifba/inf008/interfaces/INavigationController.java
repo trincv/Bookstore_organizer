@@ -1,13 +1,13 @@
 package br.edu.ifba.inf008.interfaces;
 
+import javafx.scene.Scene;
+
 public interface INavigationController {
 
-    public abstract void showLibraryManagment();
+    public abstract void showScene(Scene newScene);
 
-    public abstract void showUsersManagment();
+    public abstract void goBack();
 
-    public abstract void showBooksManagment();
-    
-    public abstract void showLoansManagment();
+    public abstract void showScreen(String pluginName);
 
 }

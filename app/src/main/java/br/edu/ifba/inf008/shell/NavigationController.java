@@ -1,38 +1,61 @@
 package br.edu.ifba.inf008.shell;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import br.edu.ifba.inf008.interfaces.INavigationController;
+import br.edu.ifba.inf008.interfaces.IPlugin;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class NavigationController implements INavigationController{
 
     private final Stage mainStage;
+    private final Deque<Scene> sceneStack = new ArrayDeque<>();
 
     public NavigationController(Stage stage) {
         this.mainStage = stage;
     }
 
-    @Override
-    public void showLibraryManagment(){
-        Scene menuScene = new Scene(null);
-        mainStage.setScene(menuScene);
+    public void showScene(Scene newScene) {
+
+        try {
+            Scene curretScene = mainStage.getScene();
+            sceneStack.push(curretScene);
+            mainStage.setScene(newScene);
+            mainStage.show();
+
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
-    @Override
-    public void showUsersManagment(){
-        Scene usersScene = new Scene(null);
-        mainStage.setScene(usersScene);
+    public void goBack() {
+
+        try {
+            Scene previousScene = sceneStack.pop();
+            mainStage.setScene(previousScene);
+            mainStage.show();
+
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
-    @Override
-    public void showBooksManagment(){
-        Scene booksScene = new Scene(null);
-        mainStage.setScene(booksScene);
-    }
+    public void showScreen(String pluginName) {
 
-    @Override
-    public void showLoansManagment(){
-        Scene loansScene = new Scene(null);
-        mainStage.setScene(loansScene);
+            IPlugin plugin = Core.getInstance().getPluginController().getPlugin(pluginName);
+
+            if(plugin == null) {
+                System.err.println("Plugin " + pluginName + " não inicializado");
+                return;
+            }
+            
+            boolean sucess = plugin.init();
+
+            if(sucess == false) {
+                System.err.println("plugin " + pluginName + " falhou ao inicializar");
+                return;
+            }
     }
 }

@@ -51,17 +51,7 @@ public class UIController extends Application implements IUIController
 
         root = new BorderPane();
 
-        /*menuBar = new MenuBar();
-
-        VBox vBox = new VBox(menuBar);
-
-        tabPane = new TabPane();
-        tabPane.setSide(Side.BOTTOM);
-
-        vBox.getChildren().addAll(tabPane);
-        */
-
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 800, 600);
 
         primaryStage.setScene(scene);
         primaryStage.show();

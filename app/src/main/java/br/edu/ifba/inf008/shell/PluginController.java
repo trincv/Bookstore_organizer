@@ -8,9 +8,14 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PluginController implements IPluginController
 {
+
+    private final Map<String, IPlugin> loadedPlugins = new HashMap<>();
+
     public boolean init() {
         try {
             File currentDir = new File("/home/filipe/ifba/INF008/Bookstore_organizer/plugins");
@@ -44,6 +49,7 @@ public class PluginController implements IPluginController
                 String pluginName = plugins[i].split("\\.")[0];
                 IPlugin plugin = (IPlugin) Class.forName("br.edu.ifba.inf008.plugins." + pluginName, true, ulc).newInstance();
                 System.out.println("Plugin loaded: " + pluginName);
+                loadedPlugins.put(pluginName, plugin);
                 plugin.init();
             }
 
@@ -55,5 +61,10 @@ public class PluginController implements IPluginController
 
             return false;
         }
+    }
+
+    @Override
+    public IPlugin getPlugin(String pluginName) {
+        return loadedPlugins.get(pluginName);
     }
 }
