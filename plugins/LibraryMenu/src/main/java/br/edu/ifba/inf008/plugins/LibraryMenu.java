@@ -2,13 +2,16 @@ package br.edu.ifba.inf008.plugins;
 
 import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.ICore;
+import br.edu.ifba.inf008.interfaces.INavigationController;
 import br.edu.ifba.inf008.interfaces.IUIController;
 
 import javafx.scene.image.Image;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.paint.Color;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
@@ -24,14 +27,19 @@ public class LibraryMenu implements IPlugin
 
     public boolean init() {
         
-        IUIController uiController = ICore.getInstance().getUIController();
+        //IUIController uiController = ICore.getInstance().getUIController();
+
+        INavigationController navController = ICore.getInstance().getNavigationController();
+
+        BorderPane root = new BorderPane();
+        root.setStyle("-fx-background-color: #1e1e2f;");
 
         // topo / titulo:
         HBox topBar = new HBox();
         topBar.setAlignment(Pos.CENTER);
         topBar.setPadding(new Insets(5, 5, 5, 5));
         topBar.setStyle("-fx-background-color: #2b2b3c");
-        
+
         Label titleLabel = new Label("Library Management Menu");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         titleLabel.setStyle("-fx-text-fill: white;");
@@ -44,9 +52,9 @@ public class LibraryMenu implements IPlugin
         leftBar.setStyle("-fx-background-color: #2b2b3c");
 
         // centro / icones:
-        VBox usersBox = createIconBox("/icons/usersIcon.png", "users", "UsersManagment"); 
-        VBox booksBox = createIconBox("/icons/booksIcon.png", "books", "BooksManagment"); 
-        VBox loansBox = createIconBox("/icons/loansIcon.png", "loans", "LoansMangment"); 
+        VBox usersBox = createIconBox("/icons/usersIcon.png", "users", "UsersManagmentMenu"); 
+        VBox booksBox = createIconBox("/icons/booksIcon.png", "books", "BooksManagmentMenu"); 
+        VBox loansBox = createIconBox("/icons/loansIcon.png", "loans", "LoansManagmentMenu"); 
     
         HBox iconsBar = new HBox();
         iconsBar.setAlignment(Pos.CENTER);
@@ -55,10 +63,15 @@ public class LibraryMenu implements IPlugin
         iconsBar.getChildren().addAll(usersBox, booksBox, loansBox);
         iconsBar.setStyle("-fx-background-color: #202030");
 
-        uiController.getSceneRoot().setTop(topBar);
+        root.setTop(topBar);
+        root.setLeft(leftBar);
+        root.setCenter(iconsBar);
+        /*uiController.getSceneRoot().setTop(topBar);
         uiController.getSceneRoot().setLeft(leftBar);
         uiController.getSceneRoot().setCenter(iconsBar);
-        
+       */ 
+        Scene menuScene = new Scene(root, 800, 600);
+        navController.showScene(menuScene);
 
         return true;
     }

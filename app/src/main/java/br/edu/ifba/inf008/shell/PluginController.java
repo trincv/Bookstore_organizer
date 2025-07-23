@@ -18,7 +18,7 @@ public class PluginController implements IPluginController
 
     public boolean init() {
         try {
-            File currentDir = new File("/home/filipe/ifba/INF008/Bookstore_organizer/plugins");
+            File currentDir = new File("../plugins/jarPlugins");
 
             // Define a FilenameFilter to include only .jar files
             FilenameFilter jarFilter = new FilenameFilter() {
@@ -38,22 +38,29 @@ public class PluginController implements IPluginController
             }
 
             int i;
+
             URL[] jars = new URL[plugins.length];
-            for (i = 0; i < plugins.length; i++)
+
+            for (i = 0; i < plugins.length; i++) 
             {
-                jars[i] = (new File("/home/filipe/ifba/INF008/Bookstore_organizer/plugins/" + plugins[i])).toURL();
+                File jarFile = new File("../plugins/jarPlugins/" + plugins[i]);
+                System.out.println("-> Plugin jar file: " + jarFile.getAbsolutePath());
+                jars[i] = jarFile.toURI().toURL();
             }
+
             URLClassLoader ulc = new URLClassLoader(jars, App.class.getClassLoader());
+
             for (i = 0; i < plugins.length; i++)
             {
                 String pluginName = plugins[i].split("\\.")[0];
                 IPlugin plugin = (IPlugin) Class.forName("br.edu.ifba.inf008.plugins." + pluginName, true, ulc).newInstance();
                 System.out.println("Plugin loaded: " + pluginName);
                 loadedPlugins.put(pluginName, plugin);
-                plugin.init();
+                //plugin.init();
             }
 
             return true;
+
         } catch (Exception e) {
             System.out.println("Error: " + e.getClass().getName() + " - " + e.getMessage());
             System.out.println(e.getStackTrace());
