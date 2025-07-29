@@ -1,0 +1,7 @@
+/home/filipe/ifba/INF008/Bookstore_organizer/plugins/UserManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/UserManagmentMenu.java
+/home/filipe/ifba/INF008/Bookstore_organizer/plugins/UserManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/crud/DeleteUserView.java
+/home/filipe/ifba/INF008/Bookstore_organizer/plugins/UserManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/crud/EditUserView.java
+/home/filipe/ifba/INF008/Bookstore_organizer/plugins/UserManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/crud/RegisterUserView.java
+/home/filipe/ifba/INF008/Bookstore_organizer/plugins/UserManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/crud/ShowUserView.java
+/home/filipe/ifba/INF008/Bookstore_organizer/plugins/UserManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/dao/UserDao.java
+/home/filipe/ifba/INF008/Bookstore_organizer/plugins/UserManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/shell/UserManagmentController.java

@@ -12,7 +12,7 @@
         <module>interfaces</module>
         <module>app</module>
         <module>plugins/LibraryMenu</module>
-        <module>plugins/UsersManagmentMenu</module>
+        <module>plugins/UserManagmentMenu</module>
     </modules>
 
     <properties>

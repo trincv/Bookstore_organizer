@@ -52,9 +52,9 @@ public class LibraryMenu implements IPlugin
         leftBar.setStyle("-fx-background-color: #2b2b3c");
 
         // centro / icones:
-        VBox usersBox = createIconBox("/icons/usersIcon.png", "users", "UsersManagmentMenu"); 
-        VBox booksBox = createIconBox("/icons/booksIcon.png", "books", "BooksManagmentMenu"); 
-        VBox loansBox = createIconBox("/icons/loansIcon.png", "loans", "LoansManagmentMenu"); 
+        VBox usersBox = createIconBox("/icons/usersIcon.png", "users", "UserManagmentMenu"); 
+        VBox booksBox = createIconBox("/icons/booksIcon.png", "books", "BookManagmentMenu"); 
+        VBox loansBox = createIconBox("/icons/loansIcon.png", "loans", "LoanManagmentMenu"); 
     
         HBox iconsBar = new HBox();
         iconsBar.setAlignment(Pos.CENTER);
