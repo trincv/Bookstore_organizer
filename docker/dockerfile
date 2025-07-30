@@ -1,0 +1,50 @@
+# Estágio de COMPILAÇÃO:
+# Usa uma imagem base oficial do OpenJDK 24 (Eclipse Temurin) com o JDK completo.
+# 'jammy' se refere à base Ubuntu 22.04 LTS, que é estável.
+FROM eclipse-temurin:24-jdk-jammy AS build
+
+# Instala o Maven no estágio de build.
+# Isso garante que o Maven esteja disponível nesta imagem específica.
+# Certifique-se de que o Maven está atualizado para funcionar bem com Java 24.
+RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
+
+# Define o diretório de trabalho dentro do contêiner
+WORKDIR /app
+
+# Copia os arquivos pom.xml principais para resolver as dependências
+COPY pom.xml .
+COPY interfaces/pom.xml interfaces/
+COPY app/pom.xml app/
+COPY plugins/LibraryMenu/pom.xml plugins/LibraryMenu/
+COPY plugins/UserManagmentMenu/pom.xml plugins/UserManagmentMenu/
+
+# Baixa as dependências do Maven
+RUN mvn dependency:go-offline -B
+
+# Copia todo o código-fonte para o diretório de trabalho
+COPY . .
+
+# Compila o projeto
+RUN mvn clean install -DskipTests
+
+# Estágio de EXECUÇÃO:
+# Usa uma imagem oficial do OpenJDK 24 JRE (Eclipse Temurin).
+# Se 'eclipse-temurin:24-jre-jammy' ainda der erro de "not found",
+# troque a linha ABAIXO para: FROM eclipse-temurin:24-jdk-jammy
+# (o JDK é maior, mas mais garantido de estar disponível).
+FROM eclipse-temurin:24-jre-jammy
+
+# Define o diretório de trabalho dentro do contêiner
+WORKDIR /app
+
+# Copia o JAR executável do estágio de build
+COPY --from=build /app/app/target/executable-1.0-SNAPSHOT.jar .
+# Copia os JARs dos plugins compilados para o local esperado
+COPY --from=build /app/plugins/jarPlugins/LibraryMenu.jar plugins/jarPlugins/LibraryMenu.jar
+COPY --from=build /app/plugins/jarPlugins/UserManagmentMenu.jar plugins/jarPlugins/UserManagmentMenu.jar
+
+# Garante que o diretório de plugins exista no ambiente de execução
+RUN mkdir -p plugins/jarPlugins
+
+# Comando para executar a aplicação
+ENTRYPOINT ["java", "-jar", "executable-1.0-SNAPSHOT.jar"]

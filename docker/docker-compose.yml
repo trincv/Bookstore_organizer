@@ -1,0 +1,34 @@
+services:
+  mariadb:
+    image: mariadb
+    container_name: bookstore-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bookstore
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: . # Constrói a imagem Docker a partir do Dockerfile no diretório atual
+    container_name: bookstore-app
+    depends_on:
+      mariadb:
+        condition: service_healthy # Garante que o banco de dados esteja pronto antes de iniciar a aplicação
+    # Se sua aplicação Java tiver uma interface gráfica que precise ser acessada,
+    # você precisaria de uma configuração de X11 forwarding ou um servidor VNC no contêiner,
+    # o que torna a configuração mais complexa.
+    # Para aplicações de linha de comando ou backend, não precisa de 'ports' aqui.
+    # ports:
+    #   - "8080:8080" # Exemplo se sua app tivesse um servidor web
+
+volumes:
+  db_data:
