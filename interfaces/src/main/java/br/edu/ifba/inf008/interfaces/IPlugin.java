@@ -6,5 +6,5 @@ public interface IPlugin
 {
     public abstract String getName();
 
-    public abstract boolean init();
+    public abstract boolean init(INavigationController navController);
 }

@@ -1,0 +1,46 @@
+.my-border-pane {
+    -fx-background-color: #1e1e2f;
+}
+
+.my-border-pane > .top {
+    -fx-background-color: #2b2b3c;
+    -fx-pref-height: 80px;
+}
+
+.my-border-pane > .left {
+    -fx-background-color: #2b2b3c; 
+}
+
+.my-border-pane > .center {
+    -fx-background-color: #202030;
+}
+
+.vbox-menu {
+    -fx-background-color: #2b2b3c;             
+    -fx-pref-width: 120px;
+    -fx-spacing: 20px;
+    -fx-alignment: top_center;
+}
+
+.icon-button {
+    -fx-background-color: #202030;
+;
+
+    -fx-pref-width: 250px;          
+    -fx-pref-height: 250px;   
+
+    -fx-padding: 0;                
+    -fx-border-radius: 5px;        
+    -fx-background-radius: 5px;
+}
+
+.nav-button {
+    -fx-background-color: #3a3a4d;
+    -fx-text-fill: white;  
+
+    -fx-pref-height: 25px;
+    -fx-pref-width: 100;
+    -fx-padding: 10px;                
+    -fx-border-radius: 5px;        
+    -fx-background-radius: 5px;
+}

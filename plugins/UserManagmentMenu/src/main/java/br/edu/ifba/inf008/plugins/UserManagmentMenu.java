@@ -1,40 +1,73 @@
 package br.edu.ifba.inf008.plugins;
 
 import br.edu.ifba.inf008.interfaces.IPlugin;
-import br.edu.ifba.inf008.interfaces.ICore;
 import br.edu.ifba.inf008.interfaces.INavigationController;
-import br.edu.ifba.inf008.interfaces.IUIController;
 import br.edu.ifba.inf008.plugins.shell.UserManagmentController;
+import br.edu.ifba.inf008.plugins.interfaces.IUserService;
+import br.edu.ifba.inf008.plugins.service.UserService;
+import br.edu.ifba.inf008.plugins.dao.UserDao;
 
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.Parent; // Importe Parent para o método initialize
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane; 
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
-public class UserManagmentMenu implements IPlugin
-{
+public class UserManagmentMenu implements IPlugin {
 
-    public String getName(){
+    private static UserManagmentMenu instance;
+
+    private IUserService userService;
+    private UserManagmentController userManagmentController;
+    private INavigationController navigationController;
+
+    public UserManagmentMenu() {}
+
+    public static UserManagmentMenu getInstance() {
+        if (instance == null) {
+
+            throw new IllegalStateException("UserManagmentMenu não foi inicializado pelo Core via ServiceLoader.");
+
+        }
+        return instance;
+    }
+
+    @Override
+    public String getName() {
         return "UsersManagmentMenu";
     }
 
-    public boolean init() {
+    @Override
+    public boolean init(INavigationController navController) {
+
+        instance = this; 
+
+        UserDao userDAO = new UserDao();
+        this.userService = new UserService(userDAO);
+
+        this.userManagmentController = new UserManagmentController();
+        this.navigationController = navController;
+
+        createPluginUI(); 
+
+        System.out.println("Plugin " + getName() + " inicializado com sucesso.");
         
-        INavigationController navController = ICore.getInstance().getNavigationController();
+        return true;
+    }
 
-
+    private void createPluginUI() {
         BorderPane root = new BorderPane();
-        root.setStyle("-fx-background-color: #1e1e2f;");
+        root.getStyleClass().add("my-border-pane"); 
 
-        // topo / titulo:
+        // Top bar
         Label title = new Label("Users Management");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         title.setTextFill(Color.WHITE);
@@ -44,7 +77,7 @@ public class UserManagmentMenu implements IPlugin
         topBar.setStyle("-fx-background-color: #2b2b3c;");
         root.setTop(topBar);
 
-        // menu lateral:
+        // Side menu
         VBox sideMenu = new VBox(20);
         sideMenu.setPadding(new Insets(20));
         sideMenu.setStyle("-fx-background-color: #2b2b3c;");
@@ -53,18 +86,19 @@ public class UserManagmentMenu implements IPlugin
 
         Button registerBtn = createNavButton("Register");
         Button searchBtn = createNavButton("Search");
-        //Button editBtn = createNavButton("Edit");
-        //Button deleteBtn = createNavButton("Delete");
-
         Button backBtn = new Button("Back");
         backBtn.setPrefWidth(160);
         backBtn.setStyle("-fx-background-color: #444; -fx-text-fill: white;");
-        backBtn.setOnAction(e -> navController.goBack());
+        
+        // Ações dos botões
+        registerBtn.setOnAction(event -> userManagmentController.registerUser());
+        searchBtn.setOnAction(event -> userManagmentController.showUsers());
+        backBtn.setOnAction(e -> navigationController.goBack());
 
         sideMenu.getChildren().addAll(registerBtn, searchBtn, backBtn);
         root.setLeft(sideMenu);
 
-        // Centro:
+        // Center pane
         Label placeholder = new Label("Select an action from the left menu.");
         placeholder.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
         placeholder.setTextFill(Color.LIGHTGRAY);
@@ -72,17 +106,11 @@ public class UserManagmentMenu implements IPlugin
         centerPane.setStyle("-fx-background-color: #202030;");
         root.setCenter(centerPane);
 
-        UserManagmentController controller = new UserManagmentController(centerPane);
+        userManagmentController.setContentPane(centerPane);
 
-        searchBtn.setOnAction(event -> {controller.ShowUsers();});
-        registerBtn.setOnAction(event -> {controller.RegisterUser();});
+        Scene scene = new Scene(root);
 
-        // Cria nova cena e exibe
-        Scene scene = new Scene(root, 800, 600);
-        navController.showScene(scene);
-
-        return true;
-        
+        navigationController.showScene(scene);
     }
 
     private Button createNavButton(String label) {
@@ -92,4 +120,6 @@ public class UserManagmentMenu implements IPlugin
         return btn;
     }
 
+    public IUserService getUserService() {return userService;};
+    
 }

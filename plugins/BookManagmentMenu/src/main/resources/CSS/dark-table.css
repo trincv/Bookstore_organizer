@@ -1,0 +1,20 @@
+.table-view {
+    -fx-background-color: #2e2e3e;
+    -fx-table-cell-border-color: #2e2e3e;
+    -fx-control-inner-background: #2e2e3e;
+    -fx-text-background-color: white;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #444454;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: white; 
+    -fx-alignment: CENTER;
+}
+
+.table-view .label {
+    -fx-text-fill: rgb(0, 0, 0);
+}

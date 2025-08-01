@@ -13,6 +13,7 @@
         <module>app</module>
         <module>plugins/LibraryMenu</module>
         <module>plugins/UserManagmentMenu</module>
+        <module>plugins/BookManagmentMenu</module>
     </modules>
 
     <properties>

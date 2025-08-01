@@ -25,11 +25,7 @@ public class LibraryMenu implements IPlugin
         return "LibraryMenu";
     }
 
-    public boolean init() {
-        
-        //IUIController uiController = ICore.getInstance().getUIController();
-
-        INavigationController navController = ICore.getInstance().getNavigationController();
+    public boolean init(INavigationController navController) {
 
         BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: #1e1e2f;");

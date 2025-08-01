@@ -51,7 +51,7 @@ public class NavigationController implements INavigationController{
                 return;
             }
             
-            boolean sucess = plugin.init();
+            boolean sucess = plugin.init(this);
 
             if(sucess == false) {
                 System.err.println("plugin " + pluginName + " falhou ao inicializar");

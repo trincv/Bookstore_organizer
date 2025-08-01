@@ -1,16 +1,14 @@
 package br.edu.ifba.inf008.plugins.crud;
 
-import br.edu.ifba.inf008.plugins.dao.UserDao;
-import br.edu.ifba.inf008.entities.User;
+import br.edu.ifba.inf008.plugins.UserManagmentMenu;
+import br.edu.ifba.inf008.plugins.model.User;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -47,8 +45,9 @@ public class ShowUserView {
 
         searchBtn.setOnAction(event -> {
 
-            List<User> users = UserDao.searchUsersByName(nameField.getText().trim());
+            List<User> users = UserManagmentMenu.getInstance().getUserService().searchUsersByName(nameField.getText().trim());
             resultsTable.setItems(FXCollections.observableArrayList(users));
+
         });
 
         resultsTable.getStylesheets().add(ShowUserView.class.getResource("/CSS/dark-table.css").toExternalForm());

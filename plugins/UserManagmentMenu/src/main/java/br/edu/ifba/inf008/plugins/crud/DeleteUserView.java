@@ -2,8 +2,10 @@ package br.edu.ifba.inf008.plugins.crud;
 
 import java.util.Optional;
 
-import br.edu.ifba.inf008.entities.User;
+import br.edu.ifba.inf008.plugins.UserManagmentMenu;
 import br.edu.ifba.inf008.plugins.dao.UserDao;
+import br.edu.ifba.inf008.plugins.interfaces.IUserService;
+import br.edu.ifba.inf008.plugins.model.User;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
@@ -11,6 +13,8 @@ import javafx.scene.control.TextInputDialog;
 public class DeleteUserView {
 
     public static Button createDeleteBtn() {
+
+        IUserService userService = UserManagmentMenu.getInstance().getUserService();
 
         Button deleteUserBtn = new Button("Delete User");
 
@@ -27,8 +31,8 @@ public class DeleteUserView {
                 try {
                     int id = Integer.parseInt(idStr);
 
-                    if (UserDao.getUserById(id) != null) {
-                        UserDao.deleteUser(id);
+                    if (userService.getUserById(id) != null) {
+                        userService.deleteUser(id);
                     } else {
                         showAlert("User not found.");
                     }

@@ -1,6 +1,6 @@
 package br.edu.ifba.inf008.plugins.dao;
 
-import br.edu.ifba.inf008.entities.User;
+import br.edu.ifba.inf008.plugins.model.User;
 import br.edu.ifba.inf008.utils.DBConnection;
 
 import java.util.ArrayList;
@@ -11,12 +11,13 @@ import java.sql.ResultSet;
 
 public class UserDao {
     
-    public static List<User> searchUsersByName(String name) {
+    public List<User> searchUsersByName(String name) {
 
         List<User> users = new ArrayList<>();
         String query = "SELECT user_id , name, email FROM users WHERE name LIKE ?";
 
         try {
+
             Connection conn = DBConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, name + "%");
@@ -34,7 +35,7 @@ public class UserDao {
         return users;
     }
 
-    public static boolean insertUser(String name, String email) {
+    public boolean insertUser(String name, String email) {
 
         String query = "INSERT INTO users (name, email) VALUES (?, ?)";
 
@@ -55,7 +56,7 @@ public class UserDao {
         return true;
     }
 
-    public static User getUserById(int id) {
+    public User getUserById(int id) {
 
         String query = "SELECT * FROM users WHERE user_id = ?";
 
@@ -79,7 +80,7 @@ public class UserDao {
 
     }
 
-    public static boolean updateUser(User user) {
+    public boolean updateUser(User user) {
 
         String query = "UPDATE users SET name = ?, email = ? WHERE user_id = ?";
 
@@ -101,7 +102,7 @@ public class UserDao {
         return true;
     }
 
-    public static boolean deleteUser(int id) {
+    public boolean deleteUser(int id) {
 
         String query = "DELETE FROM users WHERE user_id = ?";
 

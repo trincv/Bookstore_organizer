@@ -2,8 +2,10 @@ package br.edu.ifba.inf008.plugins.crud;
 
 import java.util.Optional;
 
-import br.edu.ifba.inf008.entities.User;
+import br.edu.ifba.inf008.plugins.UserManagmentMenu;
 import br.edu.ifba.inf008.plugins.dao.UserDao;
+import br.edu.ifba.inf008.plugins.interfaces.IUserService;
+import br.edu.ifba.inf008.plugins.model.User;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -18,6 +20,9 @@ import javafx.stage.Stage;
 public class EditUserView {
 
     public static void show(User user, Runnable onSuccess) {
+
+        IUserService userService = UserManagmentMenu.getInstance().getUserService();
+
         Stage editStage = new Stage();
         editStage.setTitle("Edit User");
 
@@ -32,7 +37,8 @@ public class EditUserView {
             user.setName(nameField.getText());
             user.setEmail(emailField.getText());
 
-            boolean updated = UserDao.updateUser(user);
+            boolean updated = userService.updateUser(user);
+
             if (updated) {
                 editStage.close();
                 if (onSuccess != null) onSuccess.run();
@@ -56,6 +62,8 @@ public class EditUserView {
 
     public static Button createEditBtn() {
 
+        IUserService userService = UserManagmentMenu.getInstance().getUserService();
+
         Button editUserBtn = new Button("Edit User");
 
         editUserBtn.setOnAction(e -> {
@@ -70,7 +78,7 @@ public class EditUserView {
 
                 try {
                     int id = Integer.parseInt(idStr);
-                    User user = UserDao.getUserById(id);
+                    User user = userService.getUserById(id);
 
                     if (user != null) {
                         EditUserView.show(user, () -> {});
@@ -78,7 +86,7 @@ public class EditUserView {
                         showAlert("User not found.");
                     }
                 } catch (NumberFormatException ex) {
-                    showAlert("Invalid ID format.");
+                   showAlert("Invalid ID format.");
                 }
             });
         });
@@ -86,7 +94,7 @@ public class EditUserView {
         return editUserBtn;
     }
 
-    private static void showAlert(String msg) {
+    public static void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(msg);
         alert.showAndWait();
