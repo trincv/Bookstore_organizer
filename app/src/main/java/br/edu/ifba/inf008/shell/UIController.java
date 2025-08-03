@@ -54,10 +54,9 @@ public class UIController extends Application implements IUIController
         Scene scene = new Scene(root, 800, 600);
 
         primaryStage.setScene(scene);
-        //primaryStage.show();
 
-        Core.getInstance().getPluginController().init();
         Core.getInstance().initNavigationController(primaryStage);
+        Core.getInstance().getPluginController().init();
 
         Core.getInstance().getNavigationController().showScreen("LibraryMenu");
     }

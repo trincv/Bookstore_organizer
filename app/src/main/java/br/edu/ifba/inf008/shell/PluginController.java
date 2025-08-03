@@ -4,6 +4,8 @@ import br.edu.ifba.inf008.App;
 import br.edu.ifba.inf008.interfaces.IPluginController;
 import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.ICore;
+import br.edu.ifba.inf008.interfaces.INavigationController;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.net.URL;
@@ -56,7 +58,7 @@ public class PluginController implements IPluginController
                 IPlugin plugin = (IPlugin) Class.forName("br.edu.ifba.inf008.plugins." + pluginName, true, ulc).newInstance();
                 System.out.println("Plugin loaded: " + pluginName);
                 loadedPlugins.put(pluginName, plugin);
-                //plugin.init();
+                plugin.init(ICore.getInstance().getNavigationController());
             }
 
             return true;

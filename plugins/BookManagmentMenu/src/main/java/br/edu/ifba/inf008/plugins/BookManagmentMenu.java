@@ -68,7 +68,7 @@ public class BookManagmentMenu implements IPlugin {
         root.getStyleClass().add("my-border-pane"); 
 
         // Top bar
-        Label title = new Label("Users Management");
+        Label title = new Label("Books Management");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         title.setTextFill(Color.WHITE);
         title.setPadding(new Insets(10));
