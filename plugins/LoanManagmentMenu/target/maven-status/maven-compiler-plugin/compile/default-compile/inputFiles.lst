@@ -1,9 +1,0 @@
-/home/filipe/ifba/INF008/Bookstore_organizer/plugins/LoanManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/LoanManagmentMenu.java
-/home/filipe/ifba/INF008/Bookstore_organizer/plugins/LoanManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/dao/LoanDao.java
-/home/filipe/ifba/INF008/Bookstore_organizer/plugins/LoanManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/interfaces/ILoanService.java
-/home/filipe/ifba/INF008/Bookstore_organizer/plugins/LoanManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/model/Loan.java
-/home/filipe/ifba/INF008/Bookstore_organizer/plugins/LoanManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/service/LoanService.java
-/home/filipe/ifba/INF008/Bookstore_organizer/plugins/LoanManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/shell/LoanManagmentController.java
-/home/filipe/ifba/INF008/Bookstore_organizer/plugins/LoanManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/view/LoanManagmentView.java
-/home/filipe/ifba/INF008/Bookstore_organizer/plugins/LoanManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/view/RegisterDevolutionView.java
-/home/filipe/ifba/INF008/Bookstore_organizer/plugins/LoanManagmentMenu/src/main/java/br/edu/ifba/inf008/plugins/view/RegisterLoanView.java

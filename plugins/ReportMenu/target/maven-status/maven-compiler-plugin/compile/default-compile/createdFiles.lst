@@ -1,5 +1,0 @@
-br/edu/ifba/inf008/plugins/ReportMenu.class
-br/edu/ifba/inf008/plugins/model/BorrowedBookReportData.class
-br/edu/ifba/inf008/plugins/service/ReportService.class
-br/edu/ifba/inf008/plugins/shell/ReportMenuController.class
-br/edu/ifba/inf008/plugins/view/ReportView.class

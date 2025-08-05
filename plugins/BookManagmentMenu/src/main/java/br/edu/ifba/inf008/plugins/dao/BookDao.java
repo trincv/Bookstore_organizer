@@ -138,4 +138,24 @@ public class BookDao {
         return true;
     }
 
+    public boolean titleExists(String title) {
+
+        String query = "SELECT book_id , title, author, isbn, published_year, copies_available FROM books WHERE title LIKE ?";
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, title + "%");
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next() == false) return true;
+
+        } catch(Exception e) {
+            System.err.println("Search title failed");
+        }
+        
+        return false;
+    }
 }

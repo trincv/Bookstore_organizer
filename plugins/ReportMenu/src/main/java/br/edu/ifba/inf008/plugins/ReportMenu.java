@@ -2,7 +2,6 @@ package br.edu.ifba.inf008.plugins;
 
 import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.INavigationController;
-import br.edu.ifba.inf008.plugins.view.ReportView;
 import br.edu.ifba.inf008.plugins.dao.BookDao;
 import br.edu.ifba.inf008.plugins.dao.LoanDao;
 import br.edu.ifba.inf008.plugins.dao.UserDao;

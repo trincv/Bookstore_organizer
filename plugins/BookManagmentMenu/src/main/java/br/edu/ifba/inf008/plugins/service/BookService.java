@@ -35,6 +35,8 @@ public class BookService implements IBookService{
 
         if (ValidationUtils.handleViolations(violations) == false) return false; 
 
+        if (bookDao.titleExists(title) == true) return false;
+
         return bookDao.insertBook(title, author_name, isbn, published_year, copies_avaiable);
     }
 
