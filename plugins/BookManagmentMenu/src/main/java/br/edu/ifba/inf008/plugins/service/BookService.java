@@ -3,22 +3,19 @@ package br.edu.ifba.inf008.plugins.service;
 import br.edu.ifba.inf008.plugins.dao.BookDao;
 import br.edu.ifba.inf008.plugins.interfaces.IBookService;
 import br.edu.ifba.inf008.plugins.model.Book;
-
+import br.edu.ifba.inf008.utils.ValidationUtils;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
-import javafx.scene.control.Alert;
 
 import java.util.Set;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookService implements IBookService{
 
     private final BookDao bookDao;
     private final Validator validator;
-    private List<String> violationList = new ArrayList<>(); 
 
     public BookService(BookDao bookDao) {
         this.bookDao = bookDao;
@@ -36,13 +33,7 @@ public class BookService implements IBookService{
 
         Set<ConstraintViolation<Book>> violations = validator.validate(newBook);
 
-        if (!violations.isEmpty()) {
-            System.err.println("Violations at the book registration:");
-            for (ConstraintViolation<Book> violation : violations) {
-                System.err.println(" - " + violation.getMessage());
-            }
-            return false;
-        }
+        if (ValidationUtils.handleViolations(violations) == false) return false; 
 
         return bookDao.insertBook(title, author_name, isbn, published_year, copies_avaiable);
     }
@@ -55,13 +46,7 @@ public class BookService implements IBookService{
 
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
 
-        if (!violations.isEmpty()) {
-            System.err.println("Violations at the book registration:");
-            for (ConstraintViolation<Book> violation : violations) {
-                System.err.println(" - " + violation.getMessage());
-            }
-            return false;
-        }
+        if (ValidationUtils.handleViolations(violations) == false) return false;
 
         return bookDao.updateBook(book);
     }

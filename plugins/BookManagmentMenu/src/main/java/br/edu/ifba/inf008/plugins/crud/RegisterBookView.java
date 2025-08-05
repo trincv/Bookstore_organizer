@@ -2,6 +2,7 @@ package br.edu.ifba.inf008.plugins.crud;
 
 import br.edu.ifba.inf008.plugins.BookManagmentMenu;
 import br.edu.ifba.inf008.plugins.interfaces.IBookService;
+import br.edu.ifba.inf008.utils.UIUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
@@ -18,13 +19,13 @@ public class RegisterBookView {
 
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
-        layout.setAlignment(Pos.TOP_CENTER);
+        layout.setAlignment(Pos.TOP_LEFT);
 
-        TextField titleField = createTextField("Insert title");
-        TextField authorField = createTextField("Insert author's name");
-        TextField isbnField = createTextField("Insert book's isbn");
-        TextField publishedYearField = createTextField("Insert book's published year");
-        TextField copiesAvailableField = createTextField("Insert book's avaiable copies");
+        TextField titleField = UIUtils.createTextField("Insert title");
+        TextField authorField = UIUtils.createTextField("Insert author's name");
+        TextField isbnField = UIUtils.createTextField("Insert book's isbn");
+        TextField publishedYearField = UIUtils.createTextField("Insert book's published year");
+        TextField copiesAvailableField = UIUtils.createTextField("Insert book's avaiable copies");
 
         Button registerBtn = new Button("Register");
 
@@ -69,15 +70,6 @@ public class RegisterBookView {
         );
 
         return layout;
-    }
-
-    private static TextField createTextField(String promptText) {
-
-        TextField textField = new TextField();
-        textField.setMaxWidth(600);
-        textField.setPromptText(promptText);
-
-        return textField;
     }
     
 }

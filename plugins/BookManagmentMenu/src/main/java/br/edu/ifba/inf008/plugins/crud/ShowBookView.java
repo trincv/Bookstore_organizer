@@ -2,6 +2,7 @@ package br.edu.ifba.inf008.plugins.crud;
 
 import br.edu.ifba.inf008.plugins.BookManagmentMenu;
 import br.edu.ifba.inf008.plugins.model.Book;
+import br.edu.ifba.inf008.shell.Core;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,6 +26,7 @@ public class ShowBookView {
         layout.setAlignment(Pos.TOP_CENTER);
 
         TextField titleField = new TextField();
+        titleField.setPromptText("Search by book's title");
         titleField.setMaxWidth(300);
         titleField.setAlignment(Pos.TOP_RIGHT);
 
@@ -49,7 +51,7 @@ public class ShowBookView {
 
         });
 
-        resultsTable.getStylesheets().add(ShowBookView.class.getResource("/CSS/dark-table.css").toExternalForm());
+        resultsTable.getStylesheets().add(Core.class.getResource("/css/dark-table.css").toExternalForm());
 
         layout.getChildren().addAll(searchBox, resultsTable);
 

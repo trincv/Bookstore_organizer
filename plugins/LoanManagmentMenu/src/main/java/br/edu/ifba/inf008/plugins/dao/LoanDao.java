@@ -120,4 +120,34 @@ public class LoanDao {
         return true;
     }
 
+    public List<Loan> getAllActiveLoans() {
+
+        List<Loan> loans = new ArrayList<>();
+        String query = "SELECT * FROM loans WHERE return_date IS NULL";
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                LocalDate returnDate = null;
+
+                loans.add(new Loan(rs.getInt("loan_id"), 
+                                   rs.getInt("book_id"), 
+                                   rs.getInt("user_id"), 
+                                   rs.getDate("loan_date").toLocalDate(), 
+                                   returnDate));
+            }
+
+        } catch(Exception e) {
+            System.err.println("Error listing loans: " + e.getMessage());
+        }
+
+        return loans;
+    }
+
 }

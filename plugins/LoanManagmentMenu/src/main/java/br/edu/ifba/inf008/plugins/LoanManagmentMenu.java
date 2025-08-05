@@ -3,12 +3,14 @@ package br.edu.ifba.inf008.plugins;
 import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.INavigationController;
 import br.edu.ifba.inf008.plugins.shell.LoanManagmentController;
+import br.edu.ifba.inf008.utils.UIUtils;
 import br.edu.ifba.inf008.plugins.interfaces.ILoanService;
 import br.edu.ifba.inf008.plugins.service.LoanService;
 import br.edu.ifba.inf008.plugins.dao.LoanDao;
 import br.edu.ifba.inf008.plugins.dao.UserDao;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,6 +29,7 @@ public class LoanManagmentMenu implements IPlugin {
     private ILoanService loanService;
     private LoanManagmentController loanManagmentController;
     private INavigationController navigationController;
+    private Scene contentView;
 
     public LoanManagmentMenu() {}
 
@@ -56,14 +59,25 @@ public class LoanManagmentMenu implements IPlugin {
         this.loanManagmentController = new LoanManagmentController();
         this.navigationController = navController;
 
-        createPluginUI(); 
+        this.contentView = createPluginUI(); 
 
         System.out.println("Plugin " + getName() + " inicializado com sucesso.");
         
         return true;
     }
 
-    private void createPluginUI() {
+    public Node createNavButton(Runnable action) {
+
+        return UIUtils.createNavButtonWithIcon(
+            "Loans Management", 
+            "/icons/loansIcon.png", 
+            getClass(), 
+            action
+        );
+        
+    }
+
+    private Scene createPluginUI() {
         BorderPane root = new BorderPane();
         root.getStyleClass().add("my-border-pane"); 
 
@@ -84,10 +98,8 @@ public class LoanManagmentMenu implements IPlugin {
         sideMenu.setPrefWidth(200);
         sideMenu.setAlignment(Pos.TOP_LEFT);
 
-        Button loanManagmentBtn = createNavButton("Loan managment");
-        Button backBtn = new Button("Back");
-        backBtn.setPrefWidth(160);
-        backBtn.setStyle("-fx-background-color: #444; -fx-text-fill: white;");
+        Button loanManagmentBtn = UIUtils.createInternNavButton("Loan managment");
+        Button backBtn = UIUtils.createInternNavButton("Back");
         
         // Ações dos botões
         loanManagmentBtn.setOnAction(event -> loanManagmentController.viewLoanMangment());
@@ -107,17 +119,11 @@ public class LoanManagmentMenu implements IPlugin {
         loanManagmentController.setContentPane(centerPane);
 
         Scene scene = new Scene(root);
-
-        navigationController.showScene(scene);
-    }
-
-    private Button createNavButton(String label) {
-        Button btn = new Button(label);
-        btn.setPrefWidth(160);
-        btn.setStyle("-fx-background-color: #3a3a4d; -fx-text-fill: white;");
-        return btn;
+        return scene;
     }
 
     public ILoanService getLoanService() {return loanService;};
+    @Override
+    public Scene getScene() { return contentView; }
     
 }

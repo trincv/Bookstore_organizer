@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import br.edu.ifba.inf008.plugins.BookManagmentMenu;
 import br.edu.ifba.inf008.plugins.interfaces.IBookService;
-import javafx.scene.control.Alert;
+import br.edu.ifba.inf008.utils.UIUtils;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 
@@ -32,20 +32,14 @@ public class DeleteBookView {
                     if (bookService.getBookById(id) != null) {
                         bookService.deleteBook(id);
                     } else {
-                        showAlert("Book not found.");
+                        UIUtils.showAlert("Book not found.");
                     }
                 } catch (NumberFormatException ex) {
-                    showAlert("Invalid ID format.");
+                    UIUtils.showAlert("Invalid ID format.");
                 }
             });
         });
 
         return deleteBookBtn;
-    }
-
-    private static void showAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 }

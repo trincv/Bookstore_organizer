@@ -4,19 +4,21 @@ import br.edu.ifba.inf008.App;
 import br.edu.ifba.inf008.interfaces.IPluginController;
 import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.ICore;
-import br.edu.ifba.inf008.interfaces.INavigationController;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PluginController implements IPluginController
 {
 
-    private final Map<String, IPlugin> loadedPlugins = new HashMap<>();
+    private final List<IPlugin> loadedPlugins = new ArrayList<>();
+    private final Map<String, IPlugin> pluginsMap = new HashMap<>();
 
     public boolean init() {
         try {
@@ -57,7 +59,9 @@ public class PluginController implements IPluginController
                 String pluginName = plugins[i].split("\\.")[0];
                 IPlugin plugin = (IPlugin) Class.forName("br.edu.ifba.inf008.plugins." + pluginName, true, ulc).newInstance();
                 System.out.println("Plugin loaded: " + pluginName);
-                loadedPlugins.put(pluginName, plugin);
+                loadedPlugins.add(plugin);
+                pluginsMap.put(pluginName, plugin);
+
                 plugin.init(ICore.getInstance().getNavigationController());
             }
 
@@ -72,8 +76,13 @@ public class PluginController implements IPluginController
         }
     }
 
-    @Override
+    
     public IPlugin getPlugin(String pluginName) {
-        return loadedPlugins.get(pluginName);
+        return pluginsMap.get(pluginName);
+    }
+
+    @Override
+    public List<IPlugin> getAllLoadedPlugins() {
+        return loadedPlugins;
     }
 }

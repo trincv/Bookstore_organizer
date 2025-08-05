@@ -3,10 +3,8 @@ package br.edu.ifba.inf008.plugins.crud;
 import java.util.Optional;
 
 import br.edu.ifba.inf008.plugins.UserManagmentMenu;
-import br.edu.ifba.inf008.plugins.dao.UserDao;
 import br.edu.ifba.inf008.plugins.interfaces.IUserService;
-import br.edu.ifba.inf008.plugins.model.User;
-import javafx.scene.control.Alert;
+import br.edu.ifba.inf008.utils.UIUtils;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 
@@ -34,20 +32,15 @@ public class DeleteUserView {
                     if (userService.getUserById(id) != null) {
                         userService.deleteUser(id);
                     } else {
-                        showAlert("User not found.");
+                        UIUtils.showAlert("User not found.");
                     }
                 } catch (NumberFormatException ex) {
-                    showAlert("Invalid ID format.");
+                    UIUtils.showAlert("Invalid ID format.");
                 }
             });
         });
 
         return deleteUserBtn;
     }
-
-    private static void showAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
+    
 }

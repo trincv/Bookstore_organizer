@@ -1,13 +1,17 @@
 package br.edu.ifba.inf008.plugins.service;
 
 import br.edu.ifba.inf008.plugins.BookManagmentMenu;
+import br.edu.ifba.inf008.plugins.UserManagmentMenu;
 import br.edu.ifba.inf008.plugins.dao.LoanDao;
 import br.edu.ifba.inf008.plugins.dao.UserDao;
 import br.edu.ifba.inf008.plugins.interfaces.IBookService;
 import br.edu.ifba.inf008.plugins.interfaces.ILoanService;
+import br.edu.ifba.inf008.plugins.interfaces.IUserService;
 import br.edu.ifba.inf008.plugins.model.Book;
 import br.edu.ifba.inf008.plugins.model.Loan;
 import br.edu.ifba.inf008.plugins.model.User;
+import br.edu.ifba.inf008.utils.UIUtils;
+import br.edu.ifba.inf008.utils.ValidationUtils;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -35,20 +39,18 @@ public class LoanService implements ILoanService{
     }
 
     /**
-     * @param userName The name of the user to search for.
-     * @return A list of loans for the first user found with that name, or an empty list if no user is found.
+     * @param userId The id of the user to search for.
+     * @return A list of loans for the user found with that id, or an empty list if no user is found.
      */
 
-    public List<Loan> searchLoansByUserName(String userName) {
+    public List<Loan> searchLoansByUserId(int userId) {
 
-        List<User> users = userDao.searchUsersByName(userName);
+        User user = userDao.getUserById(userId);
 
-        if (users.isEmpty()) {
-            System.out.println("No user found with the name: " + userName);
+        if (user == null) {
+            UIUtils.showAlert("No user found with that id:" + userId);
             return Collections.emptyList();
         }
-
-        int userId = users.get(0).getId();
         
         return loanDao.searchAll(userId);
     }
@@ -67,13 +69,13 @@ public class LoanService implements ILoanService{
 
             returnDate = LocalDate.parse(returnDateString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        } catch (DateTimeParseException e) {
-            System.err.println("Invalid date format. Please use dd/MM/yyyy.");
+        } catch (Exception e) {
+            UIUtils.showAlert(e.getMessage());
             return false;
         }
         
         if (returnDate.isBefore(loan.getLoanDate())) {
-            System.err.println("Return date cannot be before the loan date.");
+            UIUtils.showAlert("Return date cannot be before the loan date.");
             return false;
         }
 
@@ -82,31 +84,42 @@ public class LoanService implements ILoanService{
         if(!loanDao.updateLoan(loan)) return false;
         
         Book book = bookService.getBookById(loan.getBookId());
-        book.setCopiesAvailable((book.getCopiesAvailable() + 1));
+        book.setCopiesAvailable(book.getCopiesAvailable() + 1);
         bookService.updateBook(book);
-
+                
         return true;
     }
 
-    public boolean registerLoan(int userId, int bookId, Date loanDate) {
+    public boolean registerLoan(int userId, int bookId, LocalDate loanDate) {
 
         IBookService bookService = BookManagmentMenu.getInstance().getBookService();
+        IUserService userService = UserManagmentMenu.getInstance().getUserService();
 
-        Loan newLoan = new Loan(userId, bookId, loanDate.toLocalDate());
+        User user = userService.getUserById(userId);
+        Book book = bookService.getBookById(bookId);
+
+        if (user == null) {
+            UIUtils.showAlert("User not found");
+            return false;
+        }
+        if (book == null) {
+            UIUtils.showAlert("Book not found");
+            return false;
+        }
+
+        Loan newLoan = new Loan(userId, bookId, loanDate);
 
         Set<ConstraintViolation<Loan>> violations = validator.validate(newLoan);
 
-        if (!violations.isEmpty()) {
-            System.err.println("Error in register loan:");
-            for (ConstraintViolation<Loan> violation : violations) {
-                System.err.println(" - " + violation.getMessage());
-            }
+        if(ValidationUtils.handleViolations(violations) == false) return false;
+
+        if(book.isAvailable() == false) {
+            UIUtils.showAlert("The book is not available");
             return false;
         }
 
         if(!loanDao.InsertLoan(newLoan)) return false;
         
-        Book book = bookService.getBookById(newLoan.getBookId());
         book.setCopiesAvailable((book.getCopiesAvailable() - 1));
         bookService.updateBook(book);
         

@@ -3,6 +3,7 @@ package br.edu.ifba.inf008.plugins;
 import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.INavigationController;
 import br.edu.ifba.inf008.plugins.shell.UserManagmentController;
+import br.edu.ifba.inf008.utils.UIUtils;
 import br.edu.ifba.inf008.plugins.interfaces.IUserService;
 import br.edu.ifba.inf008.plugins.service.UserService;
 import br.edu.ifba.inf008.plugins.dao.UserDao;
@@ -10,7 +11,7 @@ import br.edu.ifba.inf008.plugins.dao.UserDao;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.Parent; // Importe Parent para o método initialize
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane; 
@@ -28,6 +29,7 @@ public class UserManagmentMenu implements IPlugin {
     private IUserService userService;
     private UserManagmentController userManagmentController;
     private INavigationController navigationController;
+    private Scene contentView;
 
     public UserManagmentMenu() {}
 
@@ -46,6 +48,9 @@ public class UserManagmentMenu implements IPlugin {
     }
 
     @Override
+    public Scene getScene() { return contentView; }
+
+    @Override
     public boolean init(INavigationController navController) {
 
         instance = this; 
@@ -56,14 +61,27 @@ public class UserManagmentMenu implements IPlugin {
         this.userManagmentController = new UserManagmentController();
         this.navigationController = navController;
 
-        createPluginUI(); 
+        this.contentView = createPluginUI(); 
 
         System.out.println("Plugin " + getName() + " inicializado com sucesso.");
         
         return true;
     }
 
-    private void createPluginUI() {
+    @Override
+    public Node createNavButton(Runnable action) {
+
+        return UIUtils.createNavButtonWithIcon(
+            "Users Management", 
+            "/icons/usersIcon.png", 
+            getClass(), 
+            action
+        );
+        
+    }
+
+    private Scene createPluginUI() {
+        
         BorderPane root = new BorderPane();
         root.getStyleClass().add("my-border-pane"); 
 
@@ -84,11 +102,9 @@ public class UserManagmentMenu implements IPlugin {
         sideMenu.setPrefWidth(200);
         sideMenu.setAlignment(Pos.TOP_LEFT);
 
-        Button registerBtn = createNavButton("Register");
-        Button searchBtn = createNavButton("Search");
-        Button backBtn = new Button("Back");
-        backBtn.setPrefWidth(160);
-        backBtn.setStyle("-fx-background-color: #444; -fx-text-fill: white;");
+        Button registerBtn = UIUtils.createInternNavButton("Register");
+        Button searchBtn = UIUtils.createInternNavButton("Search");
+        Button backBtn = UIUtils.createInternNavButton("Back");
         
         // Ações dos botões
         registerBtn.setOnAction(event -> userManagmentController.registerUser());
@@ -110,14 +126,7 @@ public class UserManagmentMenu implements IPlugin {
 
         Scene scene = new Scene(root);
 
-        navigationController.showScene(scene);
-    }
-
-    private Button createNavButton(String label) {
-        Button btn = new Button(label);
-        btn.setPrefWidth(160);
-        btn.setStyle("-fx-background-color: #3a3a4d; -fx-text-fill: white;");
-        return btn;
+        return scene;
     }
 
     public IUserService getUserService() {return userService;};

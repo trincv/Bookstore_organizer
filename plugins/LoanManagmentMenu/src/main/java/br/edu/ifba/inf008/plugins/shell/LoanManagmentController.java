@@ -1,7 +1,6 @@
 package br.edu.ifba.inf008.plugins.shell;
 
-import br.edu.ifba.inf008.plugins.crud.LoanManagmentView;
-import br.edu.ifba.inf008.plugins.crud.RegisterLoanView;
+import br.edu.ifba.inf008.plugins.view.LoanManagmentView;
 import javafx.scene.layout.StackPane;
 
 public class LoanManagmentController {

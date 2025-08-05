@@ -6,3 +6,5 @@
 /home/filipe/ifba/INF008/Bookstore_organizer/app/src/main/java/br/edu/ifba/inf008/shell/PluginController.java
 /home/filipe/ifba/INF008/Bookstore_organizer/app/src/main/java/br/edu/ifba/inf008/shell/UIController.java
 /home/filipe/ifba/INF008/Bookstore_organizer/app/src/main/java/br/edu/ifba/inf008/utils/DBConnection.java
+/home/filipe/ifba/INF008/Bookstore_organizer/app/src/main/java/br/edu/ifba/inf008/utils/UIUtils.java
+/home/filipe/ifba/INF008/Bookstore_organizer/app/src/main/java/br/edu/ifba/inf008/utils/ValidationUtils.java

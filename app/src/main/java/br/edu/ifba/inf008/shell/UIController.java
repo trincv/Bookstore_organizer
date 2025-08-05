@@ -2,8 +2,6 @@ package br.edu.ifba.inf008.shell;
 
 import br.edu.ifba.inf008.interfaces.IUIController;
 import br.edu.ifba.inf008.interfaces.ICore;
-import br.edu.ifba.inf008.shell.PluginController;
-import br.edu.ifba.inf008.interfaces.INavigationController;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,12 +9,9 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.application.Platform;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tab;
-import javafx.geometry.Side;
 import javafx.scene.Node;
 
 public class UIController extends Application implements IUIController

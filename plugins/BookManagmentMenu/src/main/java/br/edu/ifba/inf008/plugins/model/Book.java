@@ -14,7 +14,7 @@ public class Book {
 
     @NotBlank(message = "Author name can't be null")
     @Size(min = 3, max = 100, message = "The author must have between {min} and {max} characters")
-    @Pattern(regexp = "^[\\p{L}\\s'-]+$", message = "The Author must contain just charracters, spaces and accents")
+    @Pattern(regexp = "^[\\p{L}\\s'.-]+$", message = "The Author must contain just charracters, spaces and accents")
     private String author;
 
     @Pattern(regexp = "\\d+", message = "The ISBN must have only numbers")
@@ -45,6 +45,11 @@ public class Book {
         this.isbn = isbn;
         this.publishedYear = publishedYear;
         this.copiesAvailable = copiesAvailable;
+    }
+
+    public boolean isAvailable() {
+        if(copiesAvailable == 0) return false;
+        return true;
     }
 
     public int getBookId() {

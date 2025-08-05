@@ -3,6 +3,7 @@ package br.edu.ifba.inf008.plugins;
 import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.INavigationController;
 import br.edu.ifba.inf008.plugins.shell.BookManagmentController;
+import br.edu.ifba.inf008.utils.UIUtils;
 import br.edu.ifba.inf008.plugins.interfaces.IBookService;
 import br.edu.ifba.inf008.plugins.service.BookService;
 import br.edu.ifba.inf008.plugins.dao.BookDao;
@@ -10,7 +11,7 @@ import br.edu.ifba.inf008.plugins.dao.BookDao;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.Parent;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane; 
@@ -28,13 +29,14 @@ public class BookManagmentMenu implements IPlugin {
     private IBookService bookService;
     private BookManagmentController bookManagmentController;
     private INavigationController navigationController;
+    private Scene contentView;
 
     public BookManagmentMenu() {}
 
     public static BookManagmentMenu getInstance() {
         if (instance == null) {
 
-            throw new IllegalStateException("BookManagmentMenu não foi inicializado pelo Core via ServiceLoader.");
+            throw new IllegalStateException("BookManagmentMenu wasn't initialized");
 
         }
         return instance;
@@ -44,6 +46,9 @@ public class BookManagmentMenu implements IPlugin {
     public String getName() {
         return "BookManagmentMenu";
     }
+
+    @Override
+    public Scene getScene() { return contentView; }
 
     @Override
     public boolean init(INavigationController navController) {
@@ -56,14 +61,26 @@ public class BookManagmentMenu implements IPlugin {
         this.bookManagmentController = new BookManagmentController();
         this.navigationController = navController;
 
-        createPluginUI(); 
+        this.contentView = createPluginUI(); 
 
         System.out.println("Plugin " + getName() + " inicializado com sucesso.");
         
         return true;
     }
 
-    private void createPluginUI() {
+    @Override
+    public Node createNavButton(Runnable action) {
+
+        return UIUtils.createNavButtonWithIcon(
+            "Books Management", 
+            "/icons/booksIcon.png", 
+            getClass(), 
+            action
+        );
+
+    }
+
+    private Scene createPluginUI() {
         BorderPane root = new BorderPane();
         root.getStyleClass().add("my-border-pane"); 
 
@@ -84,11 +101,9 @@ public class BookManagmentMenu implements IPlugin {
         sideMenu.setPrefWidth(200);
         sideMenu.setAlignment(Pos.TOP_LEFT);
 
-        Button registerBtn = createNavButton("Register");
-        Button searchBtn = createNavButton("Search");
-        Button backBtn = new Button("Back");
-        backBtn.setPrefWidth(160);
-        backBtn.setStyle("-fx-background-color: #444; -fx-text-fill: white;");
+        Button registerBtn = UIUtils.createInternNavButton("Register");
+        Button searchBtn = UIUtils.createInternNavButton("Search");
+        Button backBtn = UIUtils.createInternNavButton("Back");
         
         // Ações dos botões
         registerBtn.setOnAction(event -> bookManagmentController.registerUser());
@@ -110,14 +125,7 @@ public class BookManagmentMenu implements IPlugin {
 
         Scene scene = new Scene(root);
 
-        navigationController.showScene(scene);
-    }
-
-    private Button createNavButton(String label) {
-        Button btn = new Button(label);
-        btn.setPrefWidth(160);
-        btn.setStyle("-fx-background-color: #3a3a4d; -fx-text-fill: white;");
-        return btn;
+        return scene;
     }
 
     public IBookService getBookService() {return bookService;};

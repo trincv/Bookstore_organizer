@@ -1,30 +1,39 @@
 package br.edu.ifba.inf008.plugins;
 
 import br.edu.ifba.inf008.interfaces.IPlugin;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import br.edu.ifba.inf008.interfaces.ICore;
 import br.edu.ifba.inf008.interfaces.INavigationController;
-import br.edu.ifba.inf008.interfaces.IUIController;
 
-import javafx.scene.image.Image;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.paint.Color;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class LibraryMenu implements IPlugin
 {
 
+    private Scene contentView;
+
+    @Override
     public String getName(){
         return "LibraryMenu";
     }
 
+    @Override
+    public Scene getScene() { return contentView; }
+
+    @Override
     public boolean init(INavigationController navController) {
 
         BorderPane root = new BorderPane();
@@ -48,46 +57,44 @@ public class LibraryMenu implements IPlugin
         leftBar.setStyle("-fx-background-color: #2b2b3c");
 
         // centro / icones:
-        VBox usersBox = createIconBox("/icons/usersIcon.png", "users", "UserManagmentMenu"); 
-        VBox booksBox = createIconBox("/icons/booksIcon.png", "books", "BookManagmentMenu"); 
-        VBox loansBox = createIconBox("/icons/loansIcon.png", "loans", "LoanManagmentMenu"); 
-    
         HBox iconsBar = new HBox();
         iconsBar.setAlignment(Pos.CENTER);
         iconsBar.setSpacing(150);
         iconsBar.setPadding(new Insets(100, 100, 100, 100));
-        iconsBar.getChildren().addAll(usersBox, booksBox, loansBox);
         iconsBar.setStyle("-fx-background-color: #202030");
+        iconsBar.getChildren().addAll(createPluginsButton(navController));
 
         root.setTop(topBar);
         root.setLeft(leftBar);
         root.setCenter(iconsBar);
-        /*uiController.getSceneRoot().setTop(topBar);
-        uiController.getSceneRoot().setLeft(leftBar);
-        uiController.getSceneRoot().setCenter(iconsBar);
-       */ 
+        
         Scene menuScene = new Scene(root, 800, 600);
-        navController.showScene(menuScene);
+        this.contentView = menuScene;
 
         return true;
     }
 
-    private VBox createIconBox(String imagePath, String labelText, String pluginName) {
-        
-        ImageView icon = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
-        icon.setFitHeight(200);
-        icon.setFitWidth(200);
-        icon.setOnMouseClicked(event -> {ICore.getInstance().getNavigationController().showScreen(pluginName);});
-
-        Label label = new Label(labelText);
-        label.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-        label.setAlignment(Pos.CENTER);
-        label.setTextFill(Color.LIGHTGRAY);
-
-        VBox box = new VBox(10, icon, label);
-        box.setAlignment(Pos.CENTER);
-
-        return box;
+    // Somente para poder implementar IPlugin
+    @Override
+    public Node createNavButton(Runnable action) { 
+        Node node = new Button();
+        return node;
     }
 
+    private List<Node> createPluginsButton(INavigationController navController) {
+        List<Node> pluginsButton = new ArrayList<>();
+        List<IPlugin> pluginsLoaded = ICore.getInstance().getPluginController().getAllLoadedPlugins();
+
+        for(IPlugin plugin : pluginsLoaded) {
+
+            if(plugin.getName() != (this).getName()) {
+
+            Runnable action = () -> {navController.showScene(plugin.getScene());};
+            pluginsButton.add(plugin.createNavButton(action));
+            
+            }
+        }
+
+        return pluginsButton;
+    }
 }

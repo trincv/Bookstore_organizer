@@ -1,13 +1,10 @@
 package br.edu.ifba.inf008.plugins.crud;
 
 import br.edu.ifba.inf008.plugins.UserManagmentMenu;
-import br.edu.ifba.inf008.plugins.dao.UserDao;
 import br.edu.ifba.inf008.plugins.interfaces.IUserService;
-import br.edu.ifba.inf008.plugins.model.User;
+import br.edu.ifba.inf008.utils.UIUtils;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,8 +19,8 @@ public class RegisterUserView {
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
 
-        TextField nameField = createTextField("Insert name");
-        TextField emailField = createTextField("Insert Email");
+        TextField nameField = UIUtils.createTextField("Insert name");
+        TextField emailField = UIUtils.createTextField("Insert Email");
 
         Button registerBtn = new Button("Register");
 
@@ -59,15 +56,6 @@ public class RegisterUserView {
         );
 
         return layout;
-    }
-    
-    private static TextField createTextField(String promptText) {
-
-        TextField textField = new TextField();
-        textField.setMaxWidth(600);
-        textField.setPromptText(promptText);
-
-        return textField;
     }
 }
 

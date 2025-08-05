@@ -46,7 +46,7 @@ public class UserDao {
             stmt.setString(1, name);
             stmt.setString(2, email);
 
-            stmt.executeQuery();
+            stmt.executeUpdate();
 
         } catch(Exception e) {
             System.err.println("Erro ao cadastrar o usuário: " + e.getMessage());
@@ -92,7 +92,7 @@ public class UserDao {
             stmt.setString(2, user.getEmail());
             stmt.setInt(3, user.getId());
 
-            stmt.executeQuery();
+            stmt.executeUpdate();
 
         } catch(Exception e) {
             System.err.println("Erro ao atualizar o usuário: " + e.getMessage());
@@ -112,7 +112,7 @@ public class UserDao {
         
             stmt.setInt(1, id);
 
-            stmt.executeQuery();
+            stmt.executeUpdate();
 
         } catch(Exception e) {
             System.err.println("Erro ao deletar o usuário: " + e.getMessage());

@@ -3,12 +3,11 @@ package br.edu.ifba.inf008.plugins.crud;
 import java.util.Optional;
 
 import br.edu.ifba.inf008.plugins.UserManagmentMenu;
-import br.edu.ifba.inf008.plugins.dao.UserDao;
 import br.edu.ifba.inf008.plugins.interfaces.IUserService;
 import br.edu.ifba.inf008.plugins.model.User;
+import br.edu.ifba.inf008.utils.UIUtils;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -43,7 +42,7 @@ public class EditUserView {
                 editStage.close();
                 if (onSuccess != null) onSuccess.run();
             } else {
-                showAlert("Failed to update user.");
+                UIUtils.showAlert("Failed to update user.");
             }
         });
 
@@ -83,21 +82,14 @@ public class EditUserView {
                     if (user != null) {
                         EditUserView.show(user, () -> {});
                     } else {
-                        showAlert("User not found.");
+                        UIUtils.showAlert("User not found.");
                     }
                 } catch (NumberFormatException ex) {
-                   showAlert("Invalid ID format.");
+                   UIUtils.showAlert("Invalid ID format.");
                 }
             });
         });
 
         return editUserBtn;
     }
-
-    public static void showAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
-        
 }

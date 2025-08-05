@@ -15,6 +15,7 @@
         <module>plugins/UserManagmentMenu</module>
         <module>plugins/BookManagmentMenu</module>
         <module>plugins/LoanManagmentMenu</module>
+        <module>plugins/ReportMenu</module>
     </modules>
 
     <properties>

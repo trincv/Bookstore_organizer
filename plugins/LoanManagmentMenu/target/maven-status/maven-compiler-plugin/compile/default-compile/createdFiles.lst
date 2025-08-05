@@ -1,7 +1,7 @@
 br/edu/ifba/inf008/plugins/interfaces/ILoanService.class
-br/edu/ifba/inf008/plugins/crud/RegisterDevolutionView.class
-br/edu/ifba/inf008/plugins/crud/LoanManagmentView.class
-br/edu/ifba/inf008/plugins/crud/RegisterLoanView.class
+br/edu/ifba/inf008/plugins/view/LoanManagmentView.class
+br/edu/ifba/inf008/plugins/view/RegisterDevolutionView.class
+br/edu/ifba/inf008/plugins/view/RegisterLoanView.class
 br/edu/ifba/inf008/plugins/LoanManagmentMenu.class
 br/edu/ifba/inf008/plugins/model/Loan.class
 br/edu/ifba/inf008/plugins/shell/LoanManagmentController.class
