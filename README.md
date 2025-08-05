@@ -1,4 +1,4 @@
-Sistema de Gerenciamento de Biblioteca
+# Sistema de Gerenciamento de Biblioteca
 
 Sobre o Projeto
 
@@ -6,33 +6,33 @@ Este é um Sistema de Gerenciamento de Biblioteca desenvolvido em Java, projetad
 
 O objetivo do projeto é gerenciar os processos essenciais de uma biblioteca, incluindo o cadastro de usuários e livros, o controle de empréstimos e a geração de relatórios.
 
-Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
-    JavaFX: Para a construção da interface gráfica do usuário (UI).
+JavaFX: Para a construção da interface gráfica do usuário (UI).
 
-    Maven: Como ferramenta de automação de build e gerenciamento de dependências do projeto.
+Maven: Como ferramenta de automação de build e gerenciamento de dependências do projeto.
 
-    Jakarta Validation (Bean Validation): Para validação de dados em nível de aplicação (ex: formato de e-mail, restrições de tamanho de campo).
+Jakarta Validation (Bean Validation): Para validação de dados em nível de aplicação (ex: formato de e-mail, restrições de tamanho de campo).
 
-    JDBC: Para a camada de acesso a dados (DAO), que se comunica com o banco de dados relacional.
+JDBC: Para a camada de acesso a dados (DAO), que se comunica com o banco de dados relacional.
 
-    JUnit 5 e Mockito: Para testes unitários da lógica de negócio, garantindo a qualidade e confiabilidade do código.
+JUnit 5 e Mockito: Para testes unitários da lógica de negócio, garantindo a qualidade e confiabilidade do código.
 
-    Banco de Dados Relacional: (Ex: MySQL) para persistência dos dados.
+Banco de Dados Relacional: (Ex: MySQL) para persistência dos dados.
 
-Arquitetura do Projeto
+# Arquitetura do Projeto
 
 A arquitetura do sistema segue um design modular e em camadas, focado na separação de responsabilidades.
 
-    Camada de UI (Views): Responsável pela interface do usuário. As views são criadas por cada plugin e se integram ao menu principal da aplicação.
+Camada de UI (Views): Responsável pela interface do usuário. As views são criadas por cada plugin e se integram ao menu principal da aplicação.
 
-    Camada de Serviço (Services): Contém a lógica de negócio da aplicação. As classes de serviço orquestram as operações, realizam validações complexas (como verificar a disponibilidade de cópias de um livro) e coordenam o trabalho de um ou mais DAOs.
+Camada de Serviço (Services): Contém a lógica de negócio da aplicação. As classes de serviço orquestram as operações, realizam validações complexas (como verificar a disponibilidade de cópias de um livro) e coordenam o trabalho de um ou mais DAOs.
 
-    Camada de Acesso a Dados (DAOs): Realiza a comunicação direta com o banco de dados. Cada DAO é responsável pelas operações CRUD (Create, Read, Update, Delete) de uma entidade específica.
+Camada de Acesso a Dados (DAOs): Realiza a comunicação direta com o banco de dados. Cada DAO é responsável pelas operações CRUD (Create, Read, Update, Delete) de uma entidade específica.
 
-    Sistema de Plugins: O núcleo da aplicação carrega plugins dinamicamente. Cada plugin é uma entidade autônoma que implementa a interface IPlugin, fornecendo seu próprio botão de navegação e sua própria interface de conteúdo.
+Sistema de Plugins: O núcleo da aplicação carrega plugins dinamicamente. Cada plugin é uma entidade autônoma que implementa a interface IPlugin, fornecendo seu próprio botão de navegação e sua própria interface de conteúdo.
 
-Funcionalidades Principais
+# Funcionalidades Principais
 
 O sistema oferece as seguintes funcionalidades através de seus plugins:
 
@@ -58,17 +58,17 @@ O sistema oferece as seguintes funcionalidades através de seus plugins:
 
     Relatório de Livros Emprestados: Exibe uma lista de todos os livros que estão atualmente emprestados, com informações sobre o título, autor, usuário e data do empréstimo.
 
-Como Executar o Projeto
+# Como Executar o Projeto
 
-    Pré-requisitos:
+Pré-requisitos:
 
-        Java Development Kit (JDK) 11 ou superior.
+Java Development Kit (JDK) 11 ou superior.
 
-        Maven 3.6.0 ou superior.
+Maven 3.6.0 ou superior.
 
-        Um servidor de banco de dados (ex: MySQL) configurado e em execução.
+Um servidor de banco de dados (ex: MySQL) configurado e em execução.
 
-    Configuração do Banco de Dados:
+# Configuração do Banco de Dados:
 
         Crie um banco de dados vazio.
 
@@ -76,11 +76,12 @@ Como Executar o Projeto
 
         Execute os scripts SQL para criar as tabelas users, books e loans.
 
-    Build e Execução:
+# Build e Execução:
 
-        Abra o terminal na pasta raiz do projeto.
+Abra o terminal na pasta raiz do projeto.
 
-        Execute o comando Maven para compilar e empacotar o projeto:
-        Bash
+Execute o comando Maven para compilar e empacotar o projeto:
 
-mvn clean install
+    mvn clean install
+    
+Execute o comando Maven para executar o projeto:
