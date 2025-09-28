@@ -70,7 +70,7 @@ Um servidor de banco de dados (ex: MySQL) configurado e em execução.
 
 # Configuração do Banco de Dados:
 
-Você executa docker-compose up --build no docker-compose.yml na pasta docker.
+Você executa docker-compose up no docker-compose.yml na pasta docker.
 
 O Docker constrói a imagem do app e inicia o container do mariadb.
 
@@ -87,3 +87,7 @@ Abra o terminal na pasta raiz do projeto.
 Execute o comando Maven para compilar e empacotar o projeto:
 
     mvn clean install
+
+Então mova-se para o módulo app e execute o comando:
+
+    mvn exec:java
