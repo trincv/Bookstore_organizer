@@ -10,7 +10,7 @@
         <relativePath>../..</relativePath>
     </parent>
 
-    <artifactId>UsersManagment</artifactId>
+    <artifactId>UserManagmentMenu</artifactId>
 
     <dependencies>
         <dependency>

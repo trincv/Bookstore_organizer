@@ -1,7 +1,7 @@
 # Estágio de COMPILAÇÃO:
 # Usa uma imagem base oficial do OpenJDK 24 (Eclipse Temurin) com o JDK completo.
 # 'jammy' se refere à base Ubuntu 22.04 LTS, que é estável.
-FROM eclipse-temurin:24-jdk-jammy AS build
+FROM eclipse-temurin:21-jdk-jammy AS build
 
 # Instala o Maven no estágio de build.
 # Isso garante que o Maven esteja disponível nesta imagem específica.
@@ -32,7 +32,7 @@ RUN mvn clean install -DskipTests
 # Se 'eclipse-temurin:24-jre-jammy' ainda der erro de "not found",
 # troque a linha ABAIXO para: FROM eclipse-temurin:24-jdk-jammy
 # (o JDK é maior, mas mais garantido de estar disponível).
-FROM eclipse-temurin:24-jre-jammy
+FROM eclipse-temurin:21-jdk-jammy
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app

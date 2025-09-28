@@ -25,17 +25,17 @@
         </dependency>
         <dependency>
             <groupId>br.edu.ifba.inf008</groupId>
-            <artifactId>BooksManagment</artifactId>
+            <artifactId>BookManagmentMenu</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>br.edu.ifba.inf008</groupId>
-            <artifactId>UsersManagment</artifactId>
+            <artifactId>UserManagmentMenu</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>br.edu.ifba.inf008</groupId>
-            <artifactId>LoansManagment</artifactId>
+            <artifactId>LoanManagmentMenu</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

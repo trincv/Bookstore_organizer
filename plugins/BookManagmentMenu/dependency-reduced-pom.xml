@@ -7,7 +7,7 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>BooksManagment</artifactId>
+  <artifactId>BookManagmentMenu</artifactId>
   <build>
     <plugins>
       <plugin>
