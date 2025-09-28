@@ -62,7 +62,7 @@ O sistema oferece as seguintes funcionalidades através de seus plugins:
 
 Pré-requisitos:
 
-Java Development Kit (JDK) 11 ou superior.
+Java Development Kit (JDK) 24 ou superior.
 
 Maven 3.6.0 ou superior.
 
